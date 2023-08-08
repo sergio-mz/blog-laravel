@@ -9,7 +9,7 @@ class CursoController extends Controller
 {
     public function index()
     {
-        $cursos = Curso::orderBy('id','desc')->paginate();
+        $cursos = Curso::orderBy('id', 'desc')->paginate();
 
         return view('cursos.index', compact('cursos'));
     }
@@ -21,13 +21,22 @@ class CursoController extends Controller
 
     public function store(Request $request)
     {
-        $curso = new Curso();
+
+        $request->validate([
+            'name' => 'required',
+            'descripcion' => 'required',
+            'categoria' => 'required',
+        ]);
+
+        /* $curso = new Curso();
 
         $curso->name = $request->name;
         $curso->descripcion = $request->descripcion;
         $curso->categoria = $request->categoria;
 
-        $curso->save();
+        $curso->save(); */
+
+        $curso = Curso::create($request->all()); /*otra forma de hacerlo*/
 
         return redirect()->route('cursos.show', $curso->id);
     }
@@ -35,7 +44,7 @@ class CursoController extends Controller
     public function show(Curso $curso)
     {
         /* compact('curso'); es lo mismo que: ['curso' => $curso] */
-        return view('cursos.show',['curso' => $curso]);
+        return view('cursos.show', ['curso' => $curso]);
     }
 
     public function edit(Curso $curso)
@@ -45,12 +54,28 @@ class CursoController extends Controller
 
     public function update(Request $request, Curso $curso)
     {
-        $curso->name = $request->name;
+
+        $request->validate([
+            'name' => 'required',
+            'descripcion' => 'required',
+            'categoria' => 'required',
+        ]);
+
+        /* $curso->name = $request->name;
         $curso->descripcion = $request->descripcion;
         $curso->categoria = $request->categoria;
 
-        $curso->save();
+        $curso->save(); */
+
+        $curso->update($request->all()); /* otra forma */
 
         return redirect()->route('cursos.show', $curso->id);
+    }
+
+    public function destroy(Curso $curso)
+    {
+        $curso->delete();
+
+        return redirect()->route('cursos.index');
     }
 }

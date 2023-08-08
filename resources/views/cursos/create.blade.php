@@ -11,22 +11,41 @@
         <label>
             Nombre:
             <br>
-            <input type="text" name="name">
+            <input type="text" name="name" value="{{old('name')}}">
         </label>
+
+        @error('name') {{-- funciona como un if --}}
+            <br>
+            <small>*{{$message}}</small>
+            <br>
+        @enderror
 
         <br>
         <label>
             Descripcion:
             <br>
-            <textarea name="descripcion" rows="5"></textarea>
+            <textarea name="descripcion" rows="5">{{old('descripcion')}}</textarea>
         </label>
+
+        @error('descripcion') {{-- funciona como un if --}}
+            <br>
+            <small>*{{$message}}</small>
+            <br>
+        @enderror
 
         <br>
         <label>
             Categoria:
             <br>
-            <input type="text" name="categoria">
+            <input type="text" name="categoria" value="{{old('categoria')}}">
         </label>
+
+        @error('categoria') {{-- funciona como un if --}}
+            <br>
+            <small>*{{$message}}</small>
+            <br>
+        @enderror
+
         <br>
         <button type="submit">Enviar formulario</button>
     </form>

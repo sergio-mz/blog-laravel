@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Curso extends Model
 {
     use HasFactory;
+
+    /* protected $fillable = ['name', 'descripcion','categoria']; */ /* aqui campos que quiero guardar */
+    protected $guarded = []; /* aqui campos que no quiero q guarde */
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
